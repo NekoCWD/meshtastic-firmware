@@ -109,6 +109,10 @@
 #include "modules/DropzoneModule.h"
 #endif
 
+#if !MESHTASTIC_EXCLUDE_PONG
+#include "modules/PongModule.h"
+#endif
+
 /**
  * Create module instances here.  If you are adding a new module, you must 'new' it here (or somewhere else)
  */
@@ -179,6 +183,9 @@ void setupModules()
 #endif
     // Example: Put your module here
     // new ReplyModule();
+#if !MESHTASTIC_EXCLUDE_PONG
+        new PongModule();
+#endif
 #if (HAS_BUTTON || ARCH_PORTDUINO) && !MESHTASTIC_EXCLUDE_INPUTBROKER
     if (config.display.displaymode != meshtastic_Config_DisplayConfig_DisplayMode_COLOR) {
 #if defined(T_LORA_PAGER)
