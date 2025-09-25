@@ -40,7 +40,7 @@ bool PongModule::wantPacket(const meshtastic_MeshPacket *p)
       return false;
   }
 
-  if (strcmp("Ping", (const char*)p->decoded.payload.bytes) == 0) {
+  if (strcasecmp("Ping", (const char*)p->decoded.payload.bytes) == 0) {
     return true;
   }
 
