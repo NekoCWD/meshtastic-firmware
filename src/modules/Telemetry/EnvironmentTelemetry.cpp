@@ -130,6 +130,12 @@ extern void drawCommonHeader(OLEDDisplay *display, int16_t x, int16_t y, const c
 #include "Sensor/IndicatorSensor.h"
 #endif
 
+#if __has_include(<DHT.h>)
+#ifdef DHT_PIN
+#include "Sensor/DHT.h"
+#endif
+#endif
+
 #if __has_include(<Adafruit_TSL2561_U.h>)
 #include "Sensor/TSL2561Sensor.h"
 #endif
@@ -241,6 +247,11 @@ void EnvironmentTelemetryModule::i2cScanFinished(ScanI2C *i2cScanner)
 #endif
 #if __has_include(<BH1750_WE.h>)
     addSensor<BH1750Sensor>(i2cScanner, ScanI2C::DeviceType::BH1750);
+#endif
+#if __has_include(<DHT.h>)
+#ifdef DHT_PIN
+    addSensor<DHTSensor>(i2cScanner, ScanI2C::DeviceType::NONE);
+#endif
 #endif
 
 #endif
