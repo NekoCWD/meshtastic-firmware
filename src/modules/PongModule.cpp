@@ -13,7 +13,10 @@ ProcessMessage PongModule::handleReceived(const meshtastic_MeshPacket &mp)
   char *message = new char[60];
 
   reply->channel = mp.channel;
-  reply->to = NODENUM_BROADCAST;
+  if (isBroadcast(mp.to))
+    reply->to = mp.to;
+  else
+    reply->to = mp.from;
   reply->want_ack = true;
 
   if (mp.hop_start == mp.hop_limit)
