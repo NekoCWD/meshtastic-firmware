@@ -758,8 +758,12 @@ void MQTT::onSend(const meshtastic_MeshPacket &mp_encrypted, const meshtastic_Me
         if (!isFromUs(&mp_decoded) && !isMqttServerAddressPrivate && dontUplink &&
             (ch.settings.psk.size < 2 || (ch.settings.psk.size == 16 && memcmp(ch.settings.psk.bytes, defaultpsk, 16)) ||
              (ch.settings.psk.size == 32 && memcmp(ch.settings.psk.bytes, eventpsk, 32)))) {
+#if HACK_IGNORE_MQTT_PRIVACY
+            LOG_INFO("MQTT onSend - Forwarding packet with DontMqttMeBro flag due to HACK!");
+#else
             LOG_INFO("MQTT onSend - Not forwarding packet due to DontMqttMeBro flag");
             return;
+#endif
         }
 
         if (isConfiguredForDefaultServer && (mp_decoded.decoded.portnum == meshtastic_PortNum_RANGE_TEST_APP ||
