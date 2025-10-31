@@ -20,6 +20,10 @@
   **[D]** - Disabled by default
   - System
   - Modules
+    - **[E]** Pong module  
+      Reply to **Ping** with packet information  
+      Set `MESHTASTIC_EXCLUDE_PONG=1` to **disable**
+      Set `MODULE_PONG_IGNORE_MQTT=1`, to **disable** pongs to MQTT messages
   - Misc
 
 ## What is Meshtastic?
