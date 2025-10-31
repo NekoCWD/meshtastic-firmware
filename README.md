@@ -24,6 +24,10 @@
       Reply to **Ping** with packet information  
       Set `MESHTASTIC_EXCLUDE_PONG=1` to **disable**
       Set `MODULE_PONG_IGNORE_MQTT=1`, to **disable** pongs to MQTT messages
+    - **[D]** Ping module  
+      Send **Ping** with some interval  
+      Set `MESHTASTIC_EXCLUDE_PING=0` to **enable**  
+      Set `MODULE_PING_DELAY=<DelayInMS>`, default **30000**
   - Misc
 
 ## What is Meshtastic?
