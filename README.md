@@ -28,6 +28,26 @@
       Send **Ping** with some interval  
       Set `MESHTASTIC_EXCLUDE_PING=0` to **enable**  
       Set `MODULE_PING_DELAY=<DelayInMS>`, default **30000**
+    - **[E]** Weather module  
+      Reply to **Weather** with environment information  
+      Set `MESHTASTIC_EXCLUDE_WEATHER=1` to **disable**  
+      **Sensors available**:
+        - [X] Temperature
+        - [X] Humidity
+        - [X] Pressure
+        - [ ] Gas resistance
+        - [ ] IAQ(Air Quality)
+        - [ ] Distance
+        - [ ] LUX/White LUX/IR LUX/UV LUX
+        - [ ] Wind direction
+        - [ ] Wind gust
+        - [ ] Wind speed
+        - [ ] Wind lull
+        - [ ] Weight
+        - [ ] Radiation
+        - [ ] Rainfall 1/24h
+        - [ ] Soil moisture
+        - [ ] Soil temperature
   - Misc
 
 ## What is Meshtastic?
