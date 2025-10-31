@@ -54,6 +54,10 @@
         - [ ] Soil moisture
         - [ ] Soil temperature
   - Misc
+    - **[D]** Ignore `DontMqttMeBro` flag  
+      Useful if you want to forward all the packets to non-local server  
+      **DONT USE THIS OPT WITH PUBLIC SERVERS**  
+      Set `HACK_IGNORE_MQTT_PRIVACY=1` to **enable**
 
 ## What is Meshtastic?
 Meshtastic is an open-source LoRa mesh networking project designed for long-range, low-power communication without relying on internet or cellular infrastructure. The firmware supports various hardware platforms, including ESP32, nRF52, RP2040/RP2350, and Linux-based devices.
