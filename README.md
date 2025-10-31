@@ -19,6 +19,11 @@
   **[E]** - Enabled by default  
   **[D]** - Disabled by default
   - System
+    - **[D]** DHT11/DHT22 Sensor driver  
+      Set `DHT_PIN=<Pin>` and `DHT_TYPE=<DHT11/DHT22>` to **enable** sensor driver  
+      Available measurements:
+        - [X] Temperature
+        - [X] Humidity
   - Modules
     - **[E]** Pong module  
       Reply to **Ping** with packet information  
