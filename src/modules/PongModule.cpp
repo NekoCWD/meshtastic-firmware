@@ -9,22 +9,34 @@
 
 ProcessMessage PongModule::handleReceived(const meshtastic_MeshPacket &mp)
 {
+#ifdef MODULE_PONG_IGNORE_MQTT
+  if (mp.via_mqtt)
+    return ProcessMessage::CONTINUE;
+#endif
   meshtastic_MeshPacket* reply = allocDataPacket();
   char *message = new char[60];
-
+  message[0]='\0';
   reply->channel = mp.channel;
   if (isBroadcast(mp.to))
     reply->to = mp.to;
+
   else
     reply->to = mp.from;
   reply->want_ack = true;
 
+  if (mp.via_mqtt)
+      sprintf(message, "MQTT ");
+  sprintf(message + strlen(message), "Pong to !%x\n",mp.from);
+
   if (mp.hop_start == mp.hop_limit)
     // Direct ping, SNR/RSSI can be helpful
-    sprintf(message, "Pong to !%x\nR:%d S:%.2f", mp.from, mp.rx_rssi, mp.rx_snr);
+    if(mp.rx_rssi != 0 && mp.rx_snr != 0)
+        sprintf(message + strlen(message), "R:%d S:%.2f", mp.rx_rssi, mp.rx_snr);
+    else
+        sprintf(message + strlen(message), "Zero hop & zero signal");
   else
     // Ping was obtained via mesh, SNR/RSSI can't be helpful, but hop count can
-    sprintf(message, "Pong to !%x\nHops:%d/%d", mp.from, mp.hop_start - mp.hop_limit, mp.hop_start);
+    sprintf(message + strlen(message), "Hops:%d/%d", mp.hop_start - mp.hop_limit, mp.hop_start);
 
   reply->decoded.payload.size = strlen(message);
   memcpy(reply->decoded.payload.bytes, message, reply->decoded.payload.size);
