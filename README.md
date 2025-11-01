@@ -4,6 +4,10 @@
 <h1>NekoCWD</h1>
 <h2>Meshtastic Firmware</h2>
 <h3>This repository contains the **modified** device firmware for Meshtastic</h3>
+
+![Build](https://git.nekocwd.link/NekoCWD/meshtastic-firmware/badges/workflows/build.yaml/badge.svg?style=flat&label=Build&labelColor=black&logo=platformio)
+![Sync](https://git.nekocwd.link/NekoCWD/meshtastic-firmware/badges/workflows/sync-with-upstream.yaml/badge.svg?style=flat&label=Sync%20with%20upstream&labelColor=black&logo=git)
+
 </div>
 
 ## Changes
