@@ -1,0 +1,62 @@
+name: Build
+run-name: Build
+on:
+  workflow_call:
+    inputs:
+      target:
+        description: "Build target"
+        required: true
+        default: "heltec-v3"
+        type: string
+  workflow_dispatch:
+    inputs:
+      target:
+        description: "Build target"
+        required: true
+        default: "heltec-v3"
+        type: choice
+        options: ["REPLACE WITH TARGETS"]
+
+jobs:
+  build:
+    name: Build for ${{ inputs.target }}
+    runs-on: docker
+    container:
+      image: nikolaik/python-nodejs
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Restore cache
+        uses: actions/cache/restore@v4
+        id: cache-restore
+        with:
+          path: |
+            /root/.platformio
+          key: mesh-pio
+
+      - name: Install platformio
+        if: steps.cache-restore.outputs.cache-hit != 'true'
+        shell: sh
+        run: >
+          curl -fsSL -o get-platformio.py https://raw.githubusercontent.com/platformio/platformio-core-installer/master/get-platformio.py &&
+          python3 get-platformio.py
+
+      - name: Build
+        shell: sh
+        run: /root/.platformio/penv/bin/platformio run -e ${{ inputs.target }}
+
+      - name: Upload
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ inputs.target }}
+          path: .pio/build/${{ inputs.target }}/firmware.*
+
+      - name: Save cache
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            /root/.platformio
+          key: ${{ steps.cache-restore.outputs.cache-primary-key }}

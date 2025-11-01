@@ -7,10 +7,65 @@ on:
 
 jobs:
   sync:
-    name: Sync
+    name: Rebase changes on upstream
     runs-on: docker
     uses: actions/sync-with-mirror/.forgejo/workflows/sync.yaml@main
     secrets: inherit
     with:
       name: meshtastic-firmware
       branch: develop
+
+  update_build:
+    name: Update build.yaml according to available targets
+    runs-on: docker
+    needs: sync
+    container:
+      image: nikolaik/python-nodejs
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{secrets.PUSH_TOKEN}}
+
+      - name: Restore cache
+        uses: actions/cache/restore@v4
+        id: cache-restore
+        with:
+          path: |
+            /root/.platformio
+          key: mesh-pio
+
+      - name: Install platformio
+        if: steps.cache-restore.outputs.cache-hit != 'true'
+        shell: sh
+        run: >
+          curl -fsSL -o get-platformio.py https://raw.githubusercontent.com/platformio/platformio-core-installer/master/get-platformio.py &&
+          python3 get-platformio.py
+
+      - name: Make new build.yaml
+        run: /root/.platformio/penv/bin/platformio project config --json-output | .forgejo/shell/generate-targets.py
+
+      - name: Check if nothing changed
+        id: same
+        continue-on-error: true
+        run: diff --brief new_build.yaml .forgejo/workflows/build.yaml
+
+      - name: Commit new build.yaml
+        id: commit
+        if: steps.same.outcome == 'failure'
+        shell: sh
+        run: |
+          git config --global user.email "bot@nekocwd.link"
+          git config --global user.name "Kitsune (Rebase Bot)"
+          mv new_build.yaml .forgejo/workflows/build.yaml
+          git add .forgejo/workflows/build.yaml
+          COMMIT_HASH=$(git log --oneline --grep="ci: forgejo: build: add build workflow" -1 --format=%H)
+          echo "Found commit: $COMMIT_HASH"
+          git commit --fixup=$COMMIT_HASH
+          git rebase --autosquash ${COMMIT_HASH}^
+
+      - name: Push changes
+        if: steps.commit.outcome == 'success'
+        shell: sh
+        run: git push --force
