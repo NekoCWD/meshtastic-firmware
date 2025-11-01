@@ -10,6 +10,11 @@
 
 </div>
 
+## Mirrors
+  - [NekoCWD Forgejo instance](https://git.nekocwd.link/NekoCWD/meshtastic-firmware) (Official)
+  - [GitLab](https://gitlab.com/NekoCWD/meshtastic-firmware)
+  - [GitHub](https://github.com/NekoCWD/meshtastic-firmware)
+
 ## Changes
   **[E]** - Enabled by default  
   **[D]** - Disabled by default
