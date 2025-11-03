@@ -1,0 +1,62 @@
+name: Build
+run-name: Build
+on:
+  workflow_call:
+    inputs:
+      target:
+        description: "Build target"
+        required: true
+        default: "heltec-v3"
+        type: string
+  workflow_dispatch:
+    inputs:
+      target:
+        description: "Build target"
+        required: true
+        default: "heltec-v3"
+        type: choice
+        options: [thinknode_m1, thinknode_m1-inkhud, muzi-base, nano-g2-ultra, t-echo-plus, rak3401-1watt, monteops_hw1, meshlink, meshlink_eink, heltec-mesh-node-t114, rak_wismeshtap, tracker-t1000-e, feather_diy, rak4631, rak4631_dbg, wio-sdk-wm1110, ms24sf1, thinknode_m4, wio-t1000-s, pca10059_diy_eink, r1-neo, minimesh_lite, rak4631_nomadstar_meteor_pro, rak4631_nomadstar_meteor_pro_dbg, canaryone, gat562_mesh_trial_tracker, rak2560, heltec-mesh-pocket-5000, heltec-mesh-pocket-5000-inkhud, heltec-mesh-pocket-10000, heltec-mesh-pocket-10000-inkhud, heltec-mesh-node-t114-inkhud, t-echo-lite, rak4631_eth_gw, rak4631_eth_gw_dbg, seeed_wio_tracker_L1, rak4631_eink_onrxtx, rak4631_eink, seeed_wio_tracker_L1_eink, seeed_wio_tracker_L1_eink-inkhud, rak_wismeshtag, t-echo, t-echo-inkhud, meshtiny, makerpython_nrf52840_sx1280_oled, heltec-mesh-solar, heltec-mesh-solar-eink, heltec-mesh-solar-inkhud, heltec-mesh-solar-oled, heltec-mesh-solar-tft, seeed_xiao_nrf52840_kit, seeed_xiao_nrf52840_kit_i2c, TWC_mesh_v4, thinknode_m3, thinknode_m6, ME25LS01-4Y10TD, ME25LS01-4Y10TD_e-ink, seeed_solar_node, wio-tracker-wm1110, makerpython_nrf52840_sx1280_eink, picow, rp2040-lora, rak11310, nibble-rp2040, senselora_rp2040, feather_rp2040_rfm95, pico_slowclock, challenger_2040_lora, catsniffer, pico, m5stack-unitc6l, tlora-c6, hackerboxes-esp32c3-oled, m5stack-stamp-c3, ai-c3, heltec-hru-3601, heltec-ht62-esp32c3-sx1262, pico2w, pico2, native, native-tft, native-fb, native-tft-debug, coverage, buildroot, nugget-s2-lora, heltec-wireless-paper, heltec-wireless-paper-inkhud, heltec-vision-master-t190, heltec_capsule_sensor_v3, rak3312, rak3112, nugget-s3-lora, heltec_sensor_hub, bpi_picow_esp32_s3, seeed-xiao-s3, t-eth-elite, CDEBYTE_EoRa-S3, tlora-pager, tlora-pager-tft, tlora-t3s3-v1, t-beam-1w, station-g2, heltec-v3, dreamcatcher, dreamcatcher-2206, tbeam-s3-core, unphone, unphone-tft, mesh-tab-3-2-TN-resistive, mesh-tab-3-2-IPS-resistive, mesh-tab-3-5-IPS-resistive, mesh-tab-3-5-TN-resistive, mesh-tab-3-2-IPS-capacitive, mesh-tab-3-5-IPS-capacitive, mesh-tab-4-0-IPS-capacitive, picomputer-s3, picomputer-s3-tft, heltec-wireless-tracker, tracksenger, tracksenger-lcd, tracksenger-oled, t-watch-s3, heltec-wireless-paper-v1_0, heltec-wireless-tracker-V1-0, rak_wismesh_tap_v2-tft, seeed-sensecap-indicator, seeed-sensecap-indicator-tft, EBYTE_ESP32-S3, m5stack-cores3, CDEBYTE_EoRa-Hub, heltec-wireless-tracker-v2, icarus, t-deck-pro, thinknode_m2, ESP32-S3-Pico, tlora-t3s3-epaper, tlora-t3s3-epaper-inkhud, heltec-v4, heltec-v4-tft, heltec-wsl-v3, thinknode_m5, nibble-esp32, link32-s3-v1, elecrow-adv-24-28-tft, elecrow-adv-35-tft, elecrow-adv1-43-50-70-tft, heltec-vision-master-e290, heltec-vision-master-e290-inkhud, crowpanel-esp32s3-5-epaper, crowpanel-esp32s3-4-epaper, crowpanel-esp32s3-2-epaper, heltec-vision-master-e213, heltec-vision-master-e213-inkhud, t-deck, t-deck-tft, hackaday-communicator, CDEBYTE_E77-MBL, rak3172, russell, wio-e5, tbeam0_7, tlora_v1_3, m5stack-core, tlora-v2, rak11200, m5stack-coreink, nano-g1-explorer, tlora-v2-1-1_6, sugarcube, tlora-v2-1-1_6-tcxo, station-g1, tlora-v2-1-1_8, nano-g1, betafpv_2400_tx_micro, betafpv_900_tx_nano, heltec-v2_1, tlora-v3-3-0-tcxo, hackerboxes-esp32-io, tbeam, tbeam-displayshield, heltec-wsl-v2_1, radiomaster_900_bandit_nano, radiomaster_900_bandit, tlora-v1, wiphone, trackerd, chatter2, heltec-v2_0, radiomaster_900_bandit_micro, heltec-wireless-bridge, heltec-v1, WashTastic, seeed-xiao-nrf52840-wio-sx1262, xiao_ble, nrf52_promicro_diy_tcxo, nrf52_promicro_diy-inkhud, seeed_xiao_nrf52840_e22_900m30s, seeed_xiao_nrf52840_e22_900m33s, esp32c3_super_mini, my-esp32s3-diy-eink, t-energy-s3_e22, my-esp32s3-diy-oled, meshtastic-diy-v1_1, hydra, meshtastic-dr-dev, 9m2ibr_aprs_lora_tracker, meshtastic-diy-v1]
+
+jobs:
+  build:
+    name: Build for ${{ inputs.target }}
+    runs-on: docker
+    container:
+      image: nikolaik/python-nodejs
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Restore cache
+        uses: actions/cache/restore@v4
+        id: cache-restore
+        with:
+          path: |
+            /root/.platformio
+          key: mesh-pio
+
+      - name: Install platformio
+        if: steps.cache-restore.outputs.cache-hit != 'true'
+        shell: sh
+        run: >
+          curl -fsSL -o get-platformio.py https://raw.githubusercontent.com/platformio/platformio-core-installer/master/get-platformio.py &&
+          python3 get-platformio.py
+
+      - name: Build
+        shell: sh
+        run: /root/.platformio/penv/bin/platformio run -e ${{ inputs.target }}
+
+      - name: Upload
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ inputs.target }}
+          path: .pio/build/${{ inputs.target }}/firmware.*
+
+      - name: Save cache
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            /root/.platformio
+          key: ${{ steps.cache-restore.outputs.cache-primary-key }}
