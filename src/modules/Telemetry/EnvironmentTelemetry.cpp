@@ -690,4 +690,5 @@ AdminMessageHandleResult EnvironmentTelemetryModule::handleAdminMessageForModule
     return result;
 }
 
+EnvironmentTelemetryModule *environmentTelemetryModule;
 #endif

@@ -38,6 +38,10 @@ class EnvironmentTelemetryModule : private concurrency::OSThread,
 #else
     virtual void drawFrame(OLEDDisplay *display, OLEDDisplayUiState *state, int16_t x, int16_t y) override;
 #endif
+    /** Called to get current Environment telemetry data
+    @return true if it contains valid data
+    */
+    bool getEnvironmentTelemetry(meshtastic_Telemetry *m);
 
   protected:
     /** Called to handle a particular incoming message
@@ -45,10 +49,6 @@ class EnvironmentTelemetryModule : private concurrency::OSThread,
     */
     virtual bool handleReceivedProtobuf(const meshtastic_MeshPacket &mp, meshtastic_Telemetry *p) override;
     virtual int32_t runOnce() override;
-    /** Called to get current Environment telemetry data
-    @return true if it contains valid data
-    */
-    bool getEnvironmentTelemetry(meshtastic_Telemetry *m);
     virtual meshtastic_MeshPacket *allocReply() override;
     /**
      * Send our Telemetry into the mesh
@@ -68,5 +68,7 @@ class EnvironmentTelemetryModule : private concurrency::OSThread,
     uint32_t lastSentToMesh = 0;
     uint32_t lastSentToPhone = 0;
 };
+
+extern EnvironmentTelemetryModule *environmentTelemetryModule;
 
 #endif

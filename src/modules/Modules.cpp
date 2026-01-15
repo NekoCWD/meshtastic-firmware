@@ -117,6 +117,11 @@
 #include "modules/PingModule.h"
 #endif
 
+#if !MESHTASTIC_EXCLUDE_WEATHER && HAS_SENSOR && !MESHTASTIC_EXCLUDE_ENVIRONMENTAL_SENSOR
+#include "modules/WeatherModule.h"
+#endif
+
+
 /**
  * Create module instances here.  If you are adding a new module, you must 'new' it here (or somewhere else)
  */
@@ -193,6 +198,9 @@ void setupModules()
 #if !MESHTASTIC_EXCLUDE_PING
         new PingModule();
 #endif
+#if !MESHTASTIC_EXCLUDE_WEATHER && HAS_SENSOR && !MESHTASTIC_EXCLUDE_ENVIRONMENTAL_SENSOR
+    new WeatherModule();
+#endif
 #if (HAS_BUTTON || ARCH_PORTDUINO) && !MESHTASTIC_EXCLUDE_INPUTBROKER
     if (config.display.displaymode != meshtastic_Config_DisplayConfig_DisplayMode_COLOR) {
 #if defined(T_LORA_PAGER)
@@ -264,7 +272,7 @@ void setupModules()
 #if HAS_TELEMETRY && HAS_SENSOR && !MESHTASTIC_EXCLUDE_ENVIRONMENTAL_SENSOR
     if (moduleConfig.has_telemetry &&
         (moduleConfig.telemetry.environment_measurement_enabled || moduleConfig.telemetry.environment_screen_enabled)) {
-        new EnvironmentTelemetryModule();
+        environmentTelemetryModule = new EnvironmentTelemetryModule();
     }
 #if HAS_TELEMETRY && HAS_SENSOR && !MESHTASTIC_EXCLUDE_AIR_QUALITY_SENSOR
     if (moduleConfig.has_telemetry &&
